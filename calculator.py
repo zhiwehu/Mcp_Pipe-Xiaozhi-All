@@ -1,7 +1,14 @@
 # server.py
 from mcp.server.fastmcp import FastMCP
+import sys
 import logging
-logger = logging.getLogger('test_mcp')
+
+logger = logging.getLogger('Calculator')
+
+# Fix UTF-8 encoding for Windows console
+if sys.platform == 'win32':
+    sys.stderr.reconfigure(encoding='utf-8')
+    sys.stdout.reconfigure(encoding='utf-8')
 
 import math
 import random
