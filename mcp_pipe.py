@@ -31,7 +31,7 @@ logger = logging.getLogger('MCP_PIPE')
 
 # Reconnection settings
 INITIAL_BACKOFF = 1  # Initial wait time in seconds
-MAX_BACKOFF = 60  # Maximum wait time in seconds
+MAX_BACKOFF = 600  # Maximum wait time in seconds
 reconnect_attempt = 0
 backoff = INITIAL_BACKOFF
 
