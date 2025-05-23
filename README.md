@@ -17,6 +17,7 @@ MCP（模型上下文协议）是一个允许服务器向语言模型暴露可�
 - 📊 Real-time data streaming | 实时数据流传输
 - 🛠️ Easy-to-use tool creation interface | 简单易用的工具创建接口
 - 🔒 Secure WebSocket communication | 安全的WebSocket通信
+- 🌐 Multiple communication modes support (STDIO and SSE) | 支持多种通信模式（STDIO和SSE）
 
 ## Quick Start | 快速开始
 
@@ -25,14 +26,40 @@ MCP（模型上下文协议）是一个允许服务器向语言模型暴露可�
 pip install -r requirements.txt
 ```
 
-2. Set up environment variables | 设置环境变量:
-```bash
-export MCP_ENDPOINT=<your_mcp_endpoint>
+2. Run with STDIO mode (original mode) | 使用STDIO模式运行（原始模式）:
+
+   - Set up environment variables | 设置环境变量:
+   ```bash
+   export MCP_ENDPOINT=<your_mcp_endpoint>
+   ```
+
+   - Run script | 运行脚本:
+   ```bash
+   python mcp_pipe.py calculator.py
+   ```
+
+3. Run with SSE mode using config file | 使用配置文件运行SSE模式:
+   ```bash
+   python mcp_pipe.py config.yaml
+   ```
+
+## Configuration | 配置
+
+You can use a YAML configuration file to specify the mode and endpoints:
+
+可以使用YAML配置文件指定模式和端点：
+
+### Example config.yaml for SSE mode | SSE模式的示例配置文件：
+```yaml
+mode: sse
+mcp_endpoint: wss://your-websocket-server.com/ws
+sse_url: http://localhost:16100/your-path/mcp/sse
 ```
 
-3. Run the calculator example | 运行计算器示例:
-```bash
-python mcp_pipe.py calculator.py
+### Example config.yaml for WebSocket mode | WebSocket模式的示例配置文件：
+```yaml
+mode: websocket
+mcp_endpoint: wss://your-websocket-server.com/ws
 ```
 
 ## Project Structure | 项目结构
@@ -40,6 +67,7 @@ python mcp_pipe.py calculator.py
 - `mcp_pipe.py`: Main communication pipe that handles WebSocket connections and process management | 处理WebSocket连接和进程管理的主通信管道
 - `calculator.py`: Example MCP tool implementation for mathematical calculations | 用于数学计算的MCP工具示例实现
 - `requirements.txt`: Project dependencies | 项目依赖
+- `config.yaml`: Configuration file for different modes | 不同模式的配置文件
 
 ## Creating Your Own MCP Tools | 创建自己的MCP工具
 
@@ -76,6 +104,8 @@ if __name__ == "__main__":
 - python-dotenv>=1.0.0
 - mcp>=1.8.1
 - pydantic>=2.11.4
+- aiohttp>=4.13.2
+- PyYAML>=6.0
 
 ## Contributing | 贡献指南
 
@@ -93,3 +123,19 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Thanks to all contributors who have helped shape this project | 感谢所有帮助塑造这个项目的贡献者
 - Inspired by the need for extensible AI capabilities | 灵感来源于对可扩展AI能力的需求
+
+## 更新日志 | Changelog
+
+### v0.2.0 主要优化
+
+- 新增 **SSE（Server-Sent Events）模式**，支持与 SSE 服务端点直接通信，自动发现消息端点，支持工具调用与响应、会话初始化（`tools/list`）、心跳保活等功能。
+- 支持通过 YAML 配置文件灵活管理端点、模式（`stdio`/`sse`）、目标脚本路径等参数，便于集中配置和多环境切换。
+- 引入响应队列机制，提升异步消息处理能力和健壮性。
+- 命令行支持 `--debug` 参数，日志与错误处理更完善。
+- 代码结构优化，核心连接逻辑支持多种模式，易于扩展和维护。
+
+## 推荐对接 | Recommended Integration
+
+> **推荐使用 [HyperChat](https://github.com/BigSweetPotatoStudio/HyperChat/blob/doc/README.zh.md) 作为 SSE 服务端，获取更多小智能力和丰富的对话能力。**
+>
+> 通过 SSE 模式对接 HyperChat，可以让您的 MCP 工具与 HyperChat 平台的多种智能体和插件无缝协作，快速扩展 AI 能力。
