@@ -104,9 +104,6 @@ async def connect_to_server(uri, target, mode='stdio'):
     global reconnect_attempt, backoff, response_queue
     
     # 重新初始化响应队列，确保每次连接都使用新的队列
-    # 如果 response_queue 在模块级别定义，并且你希望每次连接都重置，
-    # 你可能需要一个 reset_response_queue() 函数或在这里重新实例化。
-    # 假设 response_queue 是在 connect_with_retry 或全局正确处理的。
     
     # 清除之前的endpoint信息，确保每次重连都获取新的会话ID
     if hasattr(pipe_websocket_to_sse, 'endpoint'):
@@ -265,9 +262,6 @@ async def pipe_websocket_to_sse(websocket, session, base_url):
     logger.info(f"Using message endpoint: {message_endpoint}")
     
     # 正确构造完整URL - 提取消息路径的核心部分
-    # message_endpoint通常是类似/159951/mcp/xiaozhi/message?sessionId=xxx
-    # 而base_url已经包含了http://localhost:16100/159951/mcp/xiaozhi
-    # 所以我们需要避免这部分的重复
     
     # 从endpoint中提取实际需要的部分
     session_part = ""
