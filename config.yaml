@@ -1,5 +1,5 @@
 # MCP配置示例文件
-# 用于 STDIO 或 SSE 连接模式
+# 用于 STDIO 或 SSE ，Streamable HTTP 连接模式
 
 # STDIO 配置示例
 # 对于 STDIO 模式，设置 mode: stdio 并提供 mcp_endpoint
@@ -11,6 +11,13 @@
 # SSE 配置示例
 # 对于 SSE 模式，设置 mode: sse 并同时提供 mcp_endpoint 和 sse_url
 # ---------------
-mode: sse
+# mode: sse
+# mcp_endpoint: wss://api.xiaozhi.me/mcp/?token=
+# sse_url: http://localhost:16100/123456/mcp/xiaozhi/sse
+
+# Streamable HTTP 配置示例
+# 对于 Streamable HTTP 模式，设置 mode: streamable_http 并同时提供 mcp_endpoint 和 streamable_url
+# ---------------
+mode: streamable_http
 mcp_endpoint: wss://api.xiaozhi.me/mcp/?token=
-sse_url: http://localhost:16100/12345/mcp/xiaozhi/sse
+streamable_url: http://localhost:16100/123456/mcp/xiaozhi/mcp
