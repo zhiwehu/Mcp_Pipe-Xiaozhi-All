@@ -235,7 +235,7 @@ async def connect_to_server(uri, target, mode='stdio'):
             
             if mode == 'stdio':
                 process = subprocess.Popen(
-                    ['python', target],
+                    [sys.executable, target],
                     stdin=subprocess.PIPE,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
